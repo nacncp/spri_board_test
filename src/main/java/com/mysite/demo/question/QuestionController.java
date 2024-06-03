@@ -61,7 +61,7 @@ public class QuestionController {
             return "question_form";
         }
         SiteUser siteUser = this.userService.getUser(principal.getName());
-        this.questionService.create(questionForm.getSubject(), questionForm.getContent(), siteUser);
+        this.questionService.create(questionForm.getSubject(), questionForm.getContent(), siteUser, questionForm.getCategory());
         return "redirect:/question/list";
     }
     
@@ -72,8 +72,9 @@ public class QuestionController {
         if(!question.getAuthor().getUsername().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
-        questionForm.setSubject(question.getSubject());
-        questionForm.setContent(question.getContent());
+        questionForm.setSubject(question.getSubject());		//수정 제목
+        questionForm.setContent(question.getContent());  	// 수정 내용
+        questionForm.setCategory(question.getCategory()); 	// 수정 카테고리
         return "question_form";
     }
     
@@ -88,7 +89,7 @@ public class QuestionController {
         if (!question.getAuthor().getUsername().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
-        this.questionService.modify(question, questionForm.getSubject(), questionForm.getContent());
+        this.questionService.modify(question, questionForm.getSubject(), questionForm.getContent(), questionForm.getCategory());
         return String.format("redirect:/question/detail/%s", id);
     }
     

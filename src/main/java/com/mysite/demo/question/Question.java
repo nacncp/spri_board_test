@@ -49,5 +49,8 @@ public class Question {
     
     @Column(columnDefinition = "integer default 0", nullable = false)
     private int view;
+    
+    // 카테고리 추가
+    private String category;
 }
 
