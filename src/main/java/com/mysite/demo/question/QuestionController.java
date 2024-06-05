@@ -30,8 +30,25 @@ public class QuestionController {
     private final UserService userService;
 
 
-    
-    
+    @GetMapping("/list")
+    public String listByCategory(Model model, 
+                                  @RequestParam(value = "page", defaultValue = "0") int page,
+                                  @RequestParam(value = "kw", defaultValue = "") String kw,
+                                  @RequestParam(value = "category", defaultValue = "") String category) {
+        Page<Question> paging;
+
+        // 만약 카테고리가 제공되지 않으면 전체 리스트를 가져옴
+        if (category.isEmpty()) {
+            paging = this.questionService.getList(page, kw, "");
+        } else {
+            paging = this.questionService.getList(page, kw, category);
+        }
+        model.addAttribute("paging", paging);
+        model.addAttribute("kw", kw);
+        model.addAttribute("category", category);
+        return "question_list";
+    }
+    /*
     @GetMapping("/list")
     public String list(Model model, @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "kw", defaultValue = "") String kw) {
@@ -40,6 +57,8 @@ public class QuestionController {
         model.addAttribute("kw", kw);
         return "question_list";
     }
+    */
+    
     @GetMapping(value = "/detail/{id}")
     public String detail(Model model, @PathVariable("id") Integer id, AnswerForm answerForm) {
         Question question = this.questionService.getQuestion(id);

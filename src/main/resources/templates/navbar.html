@@ -7,9 +7,19 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/user/signup}">회원가입</a>
+                 <li class="nav-item">
+                    <a class="nav-link" th:href="@{/question/list}">전체 게시글</a>
                 </li>
+                <li class="nav-item">
+    				<a class="nav-link" th:href="@{/question/list(category=공지사항)}">공지사항</a>
+				</li>
+				<li class="nav-item">
+    				<a class="nav-link" th:href="@{/question/list(category=개선사항)}">개선사항</a>
+				</li>
+				<li class="nav-item">
+    				<a class="nav-link" th:href="@{/question/list(category=자유게시판)}">자유게시판</a>
+				</li>
+				
             </ul>
             <!-- 블로그 링크 추가 -->
             <ul class="navbar-nav">

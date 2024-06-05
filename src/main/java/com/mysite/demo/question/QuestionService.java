@@ -51,12 +51,15 @@ public class QuestionService {
         };
     }
     
-    public Page<Question> getList(int page, String kw) {
+    public Page<Question> getList(int page, String kw, String category) {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("createDate"));
         Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
-        return this.questionRepository.findAllByKeyword(kw, pageable);
-
+        return this.questionRepository.findAllByKeywordAndCategory(
+                kw, 
+                category.isEmpty() ? null : category, // 카테고리가 비어 있으면 null로 설정하여 조건을 건너뜁니다.
+                pageable
+            );
     }
     // 조회수 증가
     

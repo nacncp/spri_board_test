@@ -23,11 +23,11 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
             + "left outer join Answer a on a.question=q "
             + "left outer join SiteUser u2 on a.author=u2 "
             + "where "
-            + "   q.subject like %:kw% "
+            + "   (q.subject like %:kw% "
             + "   or q.content like %:kw% "
             + "   or u1.username like %:kw% "
             + "   or a.content like %:kw% "
-            + "   or u2.username like %:kw% ")
-    
-    Page<Question> findAllByKeyword(@Param("kw") String kw, Pageable pageable);
+            + "   or u2.username like %:kw%) "
+    		+ "   and (:category is null or q.category = :category)")
+    Page<Question> findAllByKeywordAndCategory(@Param("kw") String kw,  @Param("category") String category, Pageable pageable);
 }
